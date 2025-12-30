@@ -4,32 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.7/axios.min.js"></script>
     <script>
-        function sendReq(){
+         async function sendReq(){
             const a = document.getElementById("a").value
             const b= document.getElementById("b").value
-          axios.post("http:localhost:5000/sum",{
+            const response = await axios.post("http://localhost:5000/sum",{
             a:a,
             b:b
           })
-
-
+          document.getElementById("result").innerText = "Result: " + response.data.ans
         }
     </script>
-  </head>
-    <title>Document</title>
+ 
+    <title>Cors</title>
 </head>
 <body>
     <div class=" gap-10 bg-gray-600 w-fit h-100">
     <input  id="a" type="text" placeholder="enter first val:"/><br>
      <input id="b" type="text" placeholder="enter second val:"/> <br>
-    <button onclick="sendReq()" class="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-medium text-heading rounded-base group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-heading focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400">
-<span class=" relative px-4 py-2.5 transition-all ease-in duration-75 bg-neutral-primary-soft rounded-base group-hover:bg-transparent group-hover:dark:bg-transparent leading-5">
-CLICK
-</span>
-</button>
+    <button onclick="sendReq()">click</button>
+    <div id="result" class="mt-4 text-white font-bold"></div>
     </div>
 </body>
 </html>
