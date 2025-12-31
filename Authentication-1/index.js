@@ -6,6 +6,11 @@ app.use(express.json())
 const JWT_SECRET ="random secret key hai bhai ye"
 const users=[]
 
+
+app.get('/',(req,res)=>{
+    res.sendFile(__dirname + '/public/index.html')
+})
+
 app.post('/signup',(req,res)=>{
     const username=req.body.username
     const password=req.body.password
