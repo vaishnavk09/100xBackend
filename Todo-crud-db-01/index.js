@@ -1,15 +1,23 @@
 const express = require("express")
 const jwt = require("jsonwebtoken")
-JWT_SECRET="some of us are not most of us but all of us are one of us"
+
+const {auth, JWT_SECRET} = require("./auth")
 const {UserModel, TodosModel} = require("./db")
+const  mongoose = require("mongoose")
 const app = express()
 app.use(express.json())
+mongoose.connect("mongodb+srv://vaishnavk9420:pqRoDAeg9TQWonyU@zencluster.314lae1.mongodb.net/todo-app-db")
 
 app.post('/signup',async (req,res)=>{
-const {name, email, password} = req.body
+const name = req.body.name
+const email = req.body.email
+const password = req.body.password
+
 
 await UserModel.create({
-    name: name,email: email,password: password
+    name: name,
+    email: email,
+    password: password
 
 })
 res.json({message: "user signed up successfully"
@@ -43,11 +51,11 @@ else{
 
 })
 
-app.post('/todo',(req,res)=>{
+app.post('/todo',auth,(req,res)=>{
 
 })
 
-app.get('/todos',(req,res)=>{
+app.get('/todos',auth,(req,res)=>{
 
 })
 
