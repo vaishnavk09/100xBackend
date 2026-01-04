@@ -6,7 +6,7 @@ const {UserModel, TodosModel} = require("./db")
 const  mongoose = require("mongoose")
 const app = express()
 app.use(express.json())
-mongoose.connect("mongodb+srv://vaishnavk9420:pqRoDAeg9TQWonyU@zencluster.314lae1.mongodb.net/todo-app-db")
+mongoose.connect("env.MONGODB_URL")
 
 app.post('/signup',async (req,res)=>{
 const name = req.body.name
