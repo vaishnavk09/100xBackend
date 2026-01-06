@@ -1,6 +1,7 @@
 const express = require("express")
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcryptjs")
+const {z} = require("zod")
 const {auth, JWT_SECRET} = require("./auth")
 const {UserModel, TodosModel} = require("./db")
 const  mongoose = require("mongoose")
@@ -10,6 +11,23 @@ mongoose.connect("env.MONGODB_URL")
 
 app.post('/signup',async (req,res)=>{
     try{
+
+        const requiredBody= z.object(
+            {
+                email:  z.string().email(),
+                name: z.string().min(3).max(100),
+                password:z.string().min(8).max(30)
+
+            }
+        )
+        const pasreSuccess= requiredBody.safeParse(req.body)
+        if(!pasreSuccess.success)
+        {
+            return res.status(400).json({
+                message:"Invalid request body",
+                errors: pasreSuccess.error.errors
+            })
+        }
 const name = req.body.name
 const email = req.body.email
 const password = req.body.password
